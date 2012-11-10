@@ -79,6 +79,9 @@ describe "User pages" do
       before { click_button "Save changes" }
       
       it { should have_content('error') }
+
+        it { should have_link('Sign out') }
+      end  
     end
   end
 end
