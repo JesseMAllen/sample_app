@@ -150,4 +150,12 @@ describe User do
 
       it { should be_admin }
     end
+    
+    describe "with admin attribute should not be accessible " do
+        it "should not allow access to admin" do
+          expect do
+           User.new(admin: true)
+          end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+        end    
+      end
 end
