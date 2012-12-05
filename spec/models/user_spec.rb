@@ -218,6 +218,7 @@ describe User do
       let(:unfollowed_post) do
         FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
       end
+      
       let(:followed_user) { FactoryGirl.create(:user) }
 
       before do
@@ -231,6 +232,15 @@ describe User do
       its(:feed) do
         followed_user.microposts.each do |micropost|
           should include(micropost)
+        end
+      end
+      
+      it "should destroy associated relationships" do
+        relationships = @user.relationships.dup
+        @user.destroy
+        relationships.should_not be_empty
+        relationships.each do |relationship|
+          Relationship.find_by_id(relationship.id).should be_nil
         end
       end
     end
